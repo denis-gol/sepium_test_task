@@ -5,7 +5,7 @@ function property($property)
 {
     $place = '';
     if ($property['place_prop'] != '') {
-        $place = '<div class="field-help">' . $property['place_prop'] . '</div>';
+        $place = '<div class="field-help">' . h($property['place_prop']) . '</div>';
     }
 
     $idProp = $property['id'];
@@ -14,9 +14,9 @@ function property($property)
     // типы свойств: 1 - общая (просто текст)
     if ($property['type_prop'] == '1') {
         $result = '<div class="property-field name_select_rielt" data-property="' . $idProp . '" data-property-id="' . $idProp . '">
-            <div class="field-label name">' . $property['name_prop'] . '</div>
+            <div class="field-label name">' . h($property['name_prop']) . '</div>
             ' . $place . '
-            <input type="text" class="text-input add-inp ag_pole_good" placeholder="' . $property['name_prop'] . '">
+            <input type="text" class="text-input add-inp ag_pole_good" placeholder="' . h($property['name_prop']) . '">
         </div>';
 
     // типы свойств: 2 - селектор
@@ -26,11 +26,11 @@ function property($property)
         );
 
         while ($answer = $answers->fetch()) {
-            $allOption .= '<option value="' . $answer['id'] . '">' . $answer['answer_prop'] . '</option>';
+            $allOption .= '<option value="' . h($answer['id']) . '">' . h($answer['answer_prop']) . '</option>';
         }
 
         $result = '<div class="property-field name_select_rielt" data-property="' . $idProp . '" data-property-id="' . $idProp . '">
-            <div class="field-label name">' . $property['name_prop'] . '</div>
+            <div class="field-label name">' . h($property['name_prop']) . '</div>
             ' . $place . '
             <select class="text-input ag_pole_good">
                 <option value="">Не выбрано</option>' . $allOption . '
@@ -47,12 +47,12 @@ function property($property)
         while ($answer = $answers->fetch()) {
             $checkboxes .= '<label class="choice line_chek">
                 <input type="checkbox">
-                <span class="ckeck_param" data-val="' . $answer['id'] . '">' . $answer['answer_prop'] . '</span>
+                <span class="ckeck_param" data-val="' . h($answer['id']) . '">' . h($answer['answer_prop']) . '</span>
             </label>';
         }
 
         $result = '<div class="property-field name_select_rielt" data-property="' . $idProp . '" data-property-id="' . $idProp . '">
-            <div class="field-label name">' . $property['name_prop'] . '</div>
+            <div class="field-label name">' . h($property['name_prop']) . '</div>
             ' . $place . '
             <div class="choice-grid checkbox_property ag_pole_good">' . $checkboxes . '</div>
         </div>';
@@ -60,7 +60,7 @@ function property($property)
     // типы свойств: 4 - число (например, "Ширина" для категории: Мебель)
     } elseif ($property['type_prop'] == '4') {
         $result = '<div class="property-field name_select_rielt" data-property="' . $idProp . '" data-property-id="' . $idProp . '">
-            <div class="field-label name">' . $property['name_prop'] . '</div>
+            <div class="field-label name">' . h($property['name_prop']) . '</div>
             ' . $place . '
             <input type="text" inputmode="decimal" class="text-input add-inp ag_pole_good" placeholder="Числовое значение">
         </div>';
