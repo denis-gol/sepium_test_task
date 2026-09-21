@@ -16,8 +16,31 @@
         var propertyMas = {};
 
         $('.name_select_rielt').each(function () {
-            var propertyId = $(this).attr('data-property');
-            var value = $(this).find('input.ag_pole_good, select.ag_pole_good').first().val();
+            var $field = $(this);
+            var propertyId = $field.attr('data-property');
+
+            // обрабатываем чекбоксы
+            var $checkboxGrid = $field.find('.checkbox_property');
+            if ($checkboxGrid.length > 0) {
+                // перебираем каждый чекбокс в сетке
+                var boxes = [];
+                $checkboxGrid.find('label.line_chek').each(function() {
+                    var $label = $(this);
+                    if ($label.find('input[type="checkbox"]').is(':checked')) {
+                        var val = $label.find('.ckeck_param').data('val');
+                        if (val !== undefined) {
+                            boxes.push(val);
+                        }
+                    }
+                });
+                if (boxes.length > 0) {
+                    propertyMas[propertyId] = boxes.join(':::');
+                }
+
+                return;
+            }
+
+            var value = $field.find('input.ag_pole_good, select.ag_pole_good').first().val();
 
             if (value !== undefined && value !== '') {
                 propertyMas[propertyId] = value;
