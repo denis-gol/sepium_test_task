@@ -11,12 +11,15 @@ function property($property)
     $idProp = $property['id'];
     $allOption = '';
 
+    // типы свойств: 1 - общая (просто текст)
     if ($property['type_prop'] == '1') {
         $result = '<div class="property-field name_select_rielt" data-property="' . $idProp . '" data-property-id="' . $idProp . '">
             <div class="field-label name">' . $property['name_prop'] . '</div>
             ' . $place . '
             <input type="text" class="text-input add-inp ag_pole_good" placeholder="' . $property['name_prop'] . '">
         </div>';
+
+    // типы свойств: 2 - селектор
     } elseif ($property['type_prop'] == '2') {
         $answers = db()->query(
             "SELECT * FROM property_answer_s WHERE id_prop = '" . $idProp . "' ORDER BY sort_answer"
@@ -33,6 +36,8 @@ function property($property)
                 <option value="">Не выбрано</option>' . $allOption . '
             </select>
         </div>';
+
+    // типы свойств: 3 - список чекбоксов
     } elseif ($property['type_prop'] == '3') {
         $answers = db()->query(
             "SELECT * FROM property_answer_s WHERE id_prop = '" . $idProp . "' ORDER BY sort_answer"
@@ -51,6 +56,8 @@ function property($property)
             ' . $place . '
             <div class="choice-grid checkbox_property ag_pole_good">' . $checkboxes . '</div>
         </div>';
+
+    // типы свойств: 4 - число (например, "Ширина" для категории: Мебель)
     } elseif ($property['type_prop'] == '4') {
         $result = '<div class="property-field name_select_rielt" data-property="' . $idProp . '" data-property-id="' . $idProp . '">
             <div class="field-label name">' . $property['name_prop'] . '</div>
@@ -111,7 +118,11 @@ $properties = db()->query('SELECT * FROM property_s ORDER BY sort_prop');
 
                 <div class="properties property_all" aria-live="polite">
                     <?php while ($property = $properties->fetch()): ?>
-                        <?php echo property($property); ?>
+                        <?php
+                        // при загрузке страницы выводим только общие категории
+                        if (empty($property['cat_prop'])) {
+                            echo property($property);
+                        }?>
                     <?php endwhile; ?>
                 </div>
             </section>
