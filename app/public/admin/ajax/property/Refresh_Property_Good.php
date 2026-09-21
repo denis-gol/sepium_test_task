@@ -59,7 +59,7 @@ function property($property)
         $result = '<div class="property-field name_select_rielt" data-property="' . $idProp . '" data-property-id="' . $idProp . '">
             <div class="field-label name">' . h($property['name_prop']) . '</div>
             ' . $place . '
-            <input type="text" inputmode="decimal" class="text-input add-inp ag_pole_good" placeholder="Числовое значение">
+            <input type="number" inputmode="decimal" class="text-input add-inp ag_pole_good" placeholder="Числовое значение">
         </div>';
     } else {
         $result = '';
